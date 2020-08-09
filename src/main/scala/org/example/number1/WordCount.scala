@@ -15,6 +15,7 @@ object WordCount {
     val windowCounts = inputstream.flatMap(_.split(" "))
       .map((_, 1))
       .keyBy(0) //分组
+
       .timeWindow(Time.seconds(5))//开一个5秒的窗口
       .sum(1) // 统计
 

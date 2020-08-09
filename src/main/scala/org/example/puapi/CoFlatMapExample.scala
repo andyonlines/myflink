@@ -18,7 +18,9 @@ object CoFlatMapExample {
     val conn = one.keyBy(_._1)
       .connect(two.keyBy(_._1))
 
+
     val printed = conn.flatMap(new MyCoFlatMap)
+
 
     printed.print()
 

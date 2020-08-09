@@ -12,11 +12,11 @@ object KafkaExample {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
 
     //设置并行度
-    env.setParallelism(1)
+    //env.setParallelism(1)
 
     val props = new Properties()
 
-    props.put("bootstrap.servers", "localhost:9092") //设置kafka的host
+    props.put("bootstrap.servers", "xiaoai07:9092,xiaoai08:9092,xiaoai09:9092") //设置kafka的host
 
     props.put("group.id", "consumer-group") //这个设置group.id
 
@@ -32,9 +32,11 @@ object KafkaExample {
       "org.apache.kafka.common.serialization.StringDeserialization"
     )
 
+    props.put("auto.offset.reset", "latest") //设置从头开始消费
+
     //创建一个KafkaConsumer座位flink的输入源
     val stream = env.addSource(new FlinkKafkaConsumer011[String](
-      "test", //设置test是需要消费的topic
+      "flink_test", //设置test是需要消费的topic
       new SimpleStringSchema(), //这里设置的是数据格式,在kafka中的数据是string,在网络中传输数流数据,那这里接收的时候
       //SimpleStringSchema会根据utf-8对流进行解码成string
       props //这里是设置属性
