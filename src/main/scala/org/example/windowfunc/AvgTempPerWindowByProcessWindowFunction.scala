@@ -7,6 +7,9 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow
 import org.apache.flink.util.Collector
 import org.example.source.self.SensorSource
 
+/**
+ * 全量聚合函数计算平均温度
+ */
 object AvgTempPerWindowByProcessWindowFunction {
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
@@ -25,17 +28,14 @@ object AvgTempPerWindowByProcessWindowFunction {
     env.execute()
   }
 
-  class AvgTempFunc extends ProcessWindowFunction[(String,Double),(String,Double),String,TimeWindow]{
+  class AvgTempFunc extends ProcessWindowFunction[(String, Double), (String, Double), String, TimeWindow] {
     override def process(key: String, context: Context, elements: Iterable[(String, Double)], out: Collector[(String, Double)]): Unit = {
-      var size = elements.size
-
-      var sum = 0.0
-
-      for(element <- elements){
-        sum += element._2
+      val size = elements.size
+      var sum: Double = 0.0
+      for (r <- elements) {
+        sum += r._2
       }
-
-      out.collect((key,sum / size))
+      out.collect((key, sum / size))
     }
   }
 }
