@@ -1,5 +1,6 @@
 package org.example.join
 
+import org.apache.flink.cep.pattern.Quantifier.Times
 import org.apache.flink.streaming.api.TimeCharacteristic
 import org.apache.flink.streaming.api.functions.co.ProcessJoinFunction
 import org.apache.flink.streaming.api.scala._
@@ -52,10 +53,12 @@ object IntervalJoinExample {
     /**
      * 实现双流join
      */
-    clickStream.intervalJoin(browseStream)
-      .between(Time.minutes(-10), Time.seconds(0)) //定义上下界为(-10,0)
-      .process(new MyIntervalJoin)
-      .print()
+    val value = clickStream
+//      .timeWindow(Time.seconds(5))
+//      .intervalJoin(browseStream)
+//      .between(Time.minutes(-10), Time.seconds(0)) //定义上下界为(-10,0)
+//      .process(new MyIntervalJoin)
+//      .print()
     env.execute()
   }
 

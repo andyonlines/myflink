@@ -23,7 +23,7 @@ object MinMaxTempByAggregateAndProcess {
     val stream = env.addSource(new SensorSource)
 
     stream
-      .keyBy(_.id)
+      .keyBy(_.id + "1")
       .timeWindow(Time.seconds(5))
       // 第一个参数：增量聚合，第二个参数：全窗口聚合
       .aggregate(new Agg, new WindowResult)

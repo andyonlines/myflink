@@ -20,7 +20,7 @@ object AvgTempPerWindowByProcessWindowFunction {
 
     stream
       .map(r => (r.id, r.temperature))
-      .keyBy(_._1)
+      .keyBy(_._1 +"1")
       .timeWindow(Time.seconds(5))
       .process(new AvgTempFunc)
       .print()
