@@ -19,19 +19,22 @@ class SensorSource extends RichParallelSourceFunction[SensorReading] {
     // 初始化随机数发生器，用来产生随机的温度读数
     val rand = new Random
 
+    var i = 0;
+
     // 初始化10个(温度传感器ID，温度读数)元组
     // `(1 to 10)`从1遍历到10
-    var curFTemp = (1 to 10).map(
+    var curFTemp = (0 to 5).map(
       // 使用高斯噪声产生温度读数
       i => ("sensor_" + i, 65 + (rand.nextGaussian() * 20))
     )
 
     // 无限循环，产生数据流
     while (running) {
+//    for(i <- 0 to 100) {
       // 更新温度
       curFTemp = curFTemp.map(t => (t._1, t._2 + (rand.nextGaussian() * 0.5)))
 
-      // 获取当前的时间戳，单位是ms
+    // 获取当前的时间戳，单位是ms
       val curTime = Calendar.getInstance.getTimeInMillis
 
       // 调用`SourceContext`的`collect`方法来发射出数据
@@ -40,6 +43,10 @@ class SensorSource extends RichParallelSourceFunction[SensorReading] {
 
       // 100ms发送一次数据
       Thread.sleep(300)
+//      i += 1
+//      if(i >= 100){
+//        running = false
+//      }
     }
   }
 

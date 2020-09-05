@@ -46,8 +46,8 @@ under the License.
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<flink.version>1.11.1</flink.version>
-		<scala.binary.version>2.11</scala.binary.version>
-		<scala.version>2.11.12</scala.version>
+		<scala.binary.version>2.12</scala.binary.version>
+		<scala.version>2.12.12</scala.version>
 		<log4j.version>2.12.1</log4j.version>
 	</properties>
 
@@ -136,7 +136,7 @@ under the License.
 
 		<dependency>
 			<groupId>org.apache.bahir</groupId>
-			<artifactId>flink-connector-redis_${scala.binary.version}</artifactId>
+			<artifactId>flink-connector-redis_2.11</artifactId>
 			<version>1.0</version>
 		</dependency>
 
