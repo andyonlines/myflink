@@ -26,9 +26,15 @@ object FlinkTableExample {
 
     val sensorTable = tableEnv.from("inputTable")
 
-    sensorTable.select("id,temperature")
+    val resultTavle = sensorTable.select("id,temperature")
       .filter("id = 'sensor_1'")
-      .toAppendStream[(String,Double)]
+      .toAppendStream[(String, Double)]
+//      .print()
+
+    val resultSqlTable = tableEnv
+      .sqlQuery("select id,temperature from inputTable where id='sensor_1'")
+
+    resultSqlTable.toAppendStream[(String,Double)]
       .print()
 
     env.execute()
